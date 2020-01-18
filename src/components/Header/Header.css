@@ -1,4 +1,10 @@
+
 .Header{
-    width: 60%;
-    background-color: black;
+    width: 100%;
+    float: left;
+    text-align: center;
+    background-color: #F0FFFF;
+    font-family: 'Lato', sans-serif; 
+    font-size: 20px; 
+    font-weight: 100;
 }
