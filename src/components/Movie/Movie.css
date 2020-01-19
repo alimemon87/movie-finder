@@ -1,0 +1,41 @@
+/*.clearfix {
+    overflow: auto;
+  }
+.clearfix::after {
+    content: "";
+    clear: both;
+    display: table;
+}
+.Movie{
+    display: block;
+    float: left;
+    width: 23.8%;
+    overflow:hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    background-color: #f9f9f9;
+    
+}
+.MovieItem {
+    flex: 1 0 21%; 
+    margin: 5px;
+    height: 500px;
+}
+
+.MovieItem div{
+    background-color: grey;
+}
+
+.MovieItem:hover img{
+    background-color: black;
+}*/
+.Movie{
+    padding-bottom: 30px;
+}
+.thumbnail{
+    max-width: 100%;
+}
+.star{
+    font-size: 90;
+}
+
