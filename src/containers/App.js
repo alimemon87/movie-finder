@@ -12,7 +12,7 @@ const MOVIE_API_URL = "https://api.themoviedb.org/3/movie/top_rated?api_key=d097
 const initialState = {
   loading: true,
   movies: [],
-  errorMessage: null
+  errorMessage: null,
 };
 
 
@@ -43,9 +43,8 @@ const reducer = (state, action) => {
 
 
 
-const App = () => {
+const App = (props) => {
   const [state, dispatch] = useReducer(reducer, initialState);
-
     useEffect(() => {
     
         fetch(MOVIE_API_URL)
@@ -85,6 +84,10 @@ const App = () => {
 
     const { movies, errorMessage, loading } = state;
 
+    const isFavouriteClick = (e,movie,index) =>{
+      console.log(e.target);
+    }
+
     return (
     <div className="container">
       <div className="row">
@@ -102,7 +105,7 @@ const App = () => {
             ) : (
               
               movies.map((movie, index) => (
-                <Movie key={`${index}-${movie.Title}`} movie={movie} />
+                <Movie  key={`${index}-${movie.Title}`} movie={movie} click={(e)=> isFavouriteClick(e,movie,index)} />
               ))
             )}
           </div>
