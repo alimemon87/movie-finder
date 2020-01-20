@@ -2,10 +2,8 @@ import React, { useReducer, useEffect } from 'react';
 import Header from '../components/Header/Header';
 import Search from '../components/Search/Search';
 import Movie from '../components/Movie/Movie';
-import BeautyStar from "beauty-stars";
 import './App.css';
 
-//const MOVIE_API_URL = "https://www.omdbapi.com/?s=man&apikey=4a3b711b";
 const MOVIE_API_URL = "https://api.themoviedb.org/3/movie/top_rated?api_key=d097798a730d510509b5e700d897c391&language=en-US&page=1";
 
 
@@ -17,6 +15,7 @@ const initialState = {
 
 
 const reducer = (state, action) => {
+  console.log(state);
   switch (action.type) {
     case "SEARCH_MOVIES_REQUEST":
       return {
@@ -63,7 +62,6 @@ const App = (props) => {
       	type: "SEARCH_MOVIES_REQUEST"
     	});
 	
-        //fetch(`https://www.omdbapi.com/?s=${searchValue}&apikey=4a3b711b`)
         fetch(`https://api.themoviedb.org/3/search/movie?api_key=d097798a730d510509b5e700d897c391&language=en-US&query=${searchValue}&page=1&include_adult=false`)
       	.then(response => response.json())
       	.then(jsonResponse => {
@@ -88,6 +86,18 @@ const App = (props) => {
       console.log(e.target);
     }
 
+    const checkBox=(e,movie,index) => {
+      
+      const checked = e.target.checked;
+      let watchmeLaterMovies = [...state.movies];
+      watchmeLaterMovies =  watchmeLaterMovies[index];
+      watchmeLaterMovies.watchMeLater = checked;
+      dispatch({
+        type: "IS_WATCH_ME",
+        payload: watchmeLaterMovies
+    });
+    }
+
     return (
     <div className="container">
       <div className="row">
@@ -105,7 +115,11 @@ const App = (props) => {
             ) : (
               
               movies.map((movie, index) => (
-                <Movie  key={`${index}-${movie.Title}`} movie={movie} click={(e)=> isFavouriteClick(e,movie,index)} />
+                <Movie  key={`${index}-${movie.Title}`} 
+                movie={movie} 
+                click={(e)=> isFavouriteClick(e,movie,index)} 
+                checkBoxHandler = {(e) => checkBox(e,movie,index)}
+                />
               ))
             )}
           </div>
