@@ -1,10 +1,13 @@
-import React, {useState} from "react";
-import classes from './Search.css';
+import React, {useState, Fragment} from "react";
+//import classes from './Search.css';
+
+import {FormControl, Button} from 'react-bootstrap';
 
 const Search = (props) => {
     const [result,setResult] = useState("");
 
     const inputHandler = (e) => {
+        //e.preventDefault();
         setResult(e.target.value);
     }
 
@@ -19,15 +22,14 @@ const Search = (props) => {
     }
 
     return(
-        <div className={classes.Search}>
-            <h1 className={classes.textCenter}>Search For A Movie</h1> 
-            <form>
-                <div className="form-group">
-                    <input value={result} onChange={inputHandler} type="text" className="form-control" plaveholder="Enter a Movie"/>
-                </div>
-                <input className="btn btn-primary btn-block" onClick={clickHandler} type="submit" value="Search" />
-            </form>
-        </div>
+        
+        <Fragment>
+            <FormControl type="text" placeholder="Search" value={result} onChange={inputHandler} className="mr-sm-2" />
+            <Button type="submit" variant="outline-success" onClick={clickHandler}>Search</Button>
+        </Fragment>
+
+        
+        
     );
 }
 

@@ -1,21 +1,22 @@
 import React, { useReducer, useEffect } from 'react';
-import Header from '../components/Header/Header';
+
 import Search from '../components/Search/Search';
 import Movie from '../components/Movie/Movie';
 import './App.css';
 
-const MOVIE_API_URL = "https://api.themoviedb.org/3/movie/top_rated?api_key=d097798a730d510509b5e700d897c391&language=en-US&page=1";
+
+const MOVIE_API_URL = "";
+//const MOVIE_API_URL = "https://api.themoviedb.org/3/movie/top_rated?api_key=d097798a730d510509b5e700d897c391&language=en-US&page=1";
 
 
 const initialState = {
-  loading: true,
+  loading: false,
   movies: [],
   errorMessage: null,
 };
 
 
 const reducer = (state, action) => {
-  console.log(state);
   switch (action.type) {
     case "SEARCH_MOVIES_REQUEST":
       return {
@@ -43,6 +44,8 @@ const reducer = (state, action) => {
 
 
 const App = (props) => {
+
+  console.log(props);
   const [state, dispatch] = useReducer(reducer, initialState);
     useEffect(() => {
     
@@ -92,6 +95,8 @@ const App = (props) => {
       let watchmeLaterMovies = [...state.movies];
       watchmeLaterMovies =  watchmeLaterMovies[index];
       watchmeLaterMovies.watchMeLater = checked;
+      console.log(movie);
+      props.setMoviesForLater(movie);
       dispatch({
         type: "IS_WATCH_ME",
         payload: watchmeLaterMovies
@@ -99,34 +104,36 @@ const App = (props) => {
     }
 
     return (
-    <div className="container">
-      <div className="row">
-        <div className="col-md-8 col-md-offset-2">
-        <div className="App">
-          
-          <Search search={search} />
+      
+        <div className="container">
+          <div className="row">
+            <div className="col-md-8 col-md-offset-2">
+            <div className="App">
+            
+              <Search search={search} />
 
-          <div className="movies">
-            <h3 className="text-center">Results</h3>
-            {loading && !errorMessage ? (
-              <span>loading... </span>
-            ) : errorMessage ? (
-              <div className="errorMessage">{errorMessage}</div>
-            ) : (
-              
-              movies.map((movie, index) => (
-                <Movie  key={`${index}-${movie.Title}`} 
-                movie={movie} 
-                click={(e)=> isFavouriteClick(e,movie,index)} 
-                checkBoxHandler = {(e) => checkBox(e,movie,index)}
-                />
-              ))
-            )}
-          </div>
+              <div className="movies">
+                <h3 className="text-center">Results</h3>
+                {loading && !errorMessage ? (
+                  <span>loading... </span>
+                ) : errorMessage ? (
+                  <div className="errorMessage">{errorMessage}</div>
+                ) : (
+                  
+                  movies.map((movie, index) => (
+                    <Movie  key={`${index}-${movie.Title}`} 
+                    movie={movie} 
+                    click={(e)=> isFavouriteClick(e,movie,index)} 
+                    checkBoxHandler = {(e) => checkBox(e,movie,index)}
+                    />
+                  ))
+                )}
+              </div>
+              </div>
+            </div>
           </div>
         </div>
-      </div>
-    </div>
+      
   );
 };
 
