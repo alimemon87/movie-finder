@@ -1,11 +1,8 @@
-import React, {useState} from "react";
+import React from "react";
 import classes from './Movie.css';
 
 const Movie = (props) => {
-
-    let [result, setResult] = useState("");
-
-    const {movie, hideCheckBox} = props;
+    const {movie} = props;
     const imageUrl = "https://image.tmdb.org/t/p/original/"+movie.poster_path ;
 
     const clickHandler = (e) => {

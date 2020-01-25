@@ -1,4 +1,5 @@
 import React from 'react';
+import Pagination from "react-js-pagination";
 
 //Application components
 import Movie from '../../components/Movie/Movie';
@@ -9,17 +10,29 @@ class MoviesList extends React.Component {
 
     constructor(props) {
         super(props);
+        this.handlePageChange =  this.handlePageChange.bind(this);
+        this.search = this.search.bind(this);
         this.state = {
             pageTitle: 'Popular Movies.',
+            searchQuery: '',
             movies: [],
             errorMessage: '',
             loading: false,
+            itemPerPage: 3,
+            activePage: 1,
+            totalResults: 0
         }
     }
+    
 
     componentDidMount() {
+        this.getFetchApi();
+    }
+
+   
+    getFetchApi(){
         this.setState({loading: true}, ()=>{
-            fetch(`https://api.themoviedb.org/3/movie/top_rated?api_key=d097798a730d510509b5e700d897c391&language=en-US&page=1`)
+            fetch(`https://api.themoviedb.org/3/movie/top_rated?api_key=d097798a730d510509b5e700d897c391&language=en-US&page=${this.state.activePage}`)
                 .then(response => response.json())
                 .then(jsonResponse => {
                 if (jsonResponse.total_results > 0) {
@@ -33,7 +46,9 @@ class MoviesList extends React.Component {
                     }
                     this.setState({
                         movies: jsonResponse.results,
-                        loading: false
+                        totalResults: jsonResponse.total_results,
+                        loading: false,
+                        searchQuery: ''
                     });
                 } else {
                     this.setState({
@@ -43,7 +58,8 @@ class MoviesList extends React.Component {
             });
         });
     }
-
+    
+    //Selecting Watch Movie Later Functionality
     checkBox = (e, movie, index) => {
         try {
             const checked = e.target.checked;
@@ -65,7 +81,8 @@ class MoviesList extends React.Component {
             });
         }
     }
-
+    
+    //Selecting Favorites
     favourite = (e, result, movie, index) => {
         try {
             
@@ -89,9 +106,10 @@ class MoviesList extends React.Component {
         }
     }
 
+    //Searching the movie when button clicks
     search = (searchValue) => {
-        this.setState({loading: true, movies: []}, ()=>{
-            fetch(`https://api.themoviedb.org/3/search/movie?api_key=d097798a730d510509b5e700d897c391&language=en-US&query=${searchValue}&page=1&include_adult=false`)
+        this.setState({loading: true, movies: [], searchQuery: searchValue}, ()=>{
+            fetch(`https://api.themoviedb.org/3/search/movie?api_key=d097798a730d510509b5e700d897c391&language=en-US&query=${this.state.searchQuery}&page=${this.state.activePage}&include_adult=false`)
                 .then(response => response.json())
                 .then(jsonResponse => {
                 if (jsonResponse.total_results > 0) {
@@ -115,7 +133,21 @@ class MoviesList extends React.Component {
                 }
             });
         });
-	};
+    };
+    //Handling Pagination
+    handlePageChange(pageNumber) {
+        if(this.state.searchQuery === ""){
+            this.getFetchApi();
+        }else{
+            this.search(this.state.searchQuery);
+        }
+        
+        this.setState({activePage: pageNumber});
+        
+        
+      }
+    
+    
 
     render () {
         const {loading, errorMessage, movies, pageTitle} = this.state;
@@ -155,7 +187,20 @@ class MoviesList extends React.Component {
                 </div>
                 <div className="col-md-2"></div>           
             </div>
+            <div style={{display: "flex",justifyContent: "space-around",}}>
+               {
+                this.state.totalResults > 20 && !this.state.loading ?
+                <Pagination
+                    activePage={this.state.activePage}
+                    itemsCountPerPage={20}
+                    totalItemsCount={this.state.totalResults}
+                    pageRangeDisplayed={5}
+                    onChange={this.handlePageChange}
+                />: ""
+               }
+            </div>
         </div>
+        
       )
     }
 }

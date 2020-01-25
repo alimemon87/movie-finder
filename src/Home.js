@@ -3,7 +3,6 @@ import { Route, Switch, BrowserRouter as Router } from 'react-router-dom';
 import WatchLater from './containers/SelectedMovies/SelectedMovies';
 import FavouriteMovies from './containers/SelectedMovies/SelectedMovies';
 import MovieList from './containers/Movies/MoviesList';
-//import App from './containers/App';
 
 import Header from './components/Header/Header';
 

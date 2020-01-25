@@ -1,8 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import * as serviceWorker from './serviceWorker';
-import $ from'jquery';
-import Popper from'popper.js';
+//import $ from'jquery';
+//import Popper from'popper.js';
 
 //Application containers
 import Home from './Home';
