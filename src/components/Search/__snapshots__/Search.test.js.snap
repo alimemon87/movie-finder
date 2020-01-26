@@ -1,0 +1,22 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`matches the snapshot 1`] = `
+Array [
+  <input
+    className="mr-sm-2 form-control"
+    onChange={[Function]}
+    placeholder="Search"
+    type="text"
+    value=""
+  />,
+  <button
+    className="btn btn-outline-success"
+    disabled={false}
+    id="my-button"
+    onClick={[Function]}
+    type="submit"
+  >
+    Search
+  </button>,
+]
+`;

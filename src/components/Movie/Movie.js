@@ -2,9 +2,11 @@ import React from "react";
 import classes from './Movie.css';
 
 const Movie = (props) => {
+    //movie from props
     const {movie} = props;
     const imageUrl = "https://image.tmdb.org/t/p/original/"+movie.poster_path ;
 
+    //Clicking on star Icon
     const clickHandler = (e) => {
         props.onFavouriteHandler(e, (!movie.favourite) ? true : false);
     }
@@ -24,7 +26,7 @@ const Movie = (props) => {
                         {
                             (!props.hideWML) && <li className="list-group-item">
                                 <div className="custom-control custom-checkbox">
-                                    <input type="checkbox" className="custom-control-input" id={movie.id} checked={movie.watchMeLater ? true: false} onClick={(e) =>props.checkBoxHandler(e, movie.watchMeLater ? true: false)} />
+                                    <input type="checkbox" className="custom-control-input" id={movie.id} checked={movie.watchMeLater ? true: false} onChange={function(){}} onClick={(e) =>props.checkBoxHandler(e, movie.watchMeLater ? true: false) } />
                                     <label className="custom-control-label" htmlFor={movie.id}>Watch Movie Later</label>
                                 </div>
                             </li>

@@ -1,29 +1,22 @@
 import React from 'react'                                              
-import Button from './Search.js'                              
-import {shallow, configure} from 'enzyme';                             
-import Adapter from 'enzyme-adapter-react-16';        
+import {shallow} from 'enzyme';        
+import renderer from 'react-test-renderer';
+import Search from './Search';
 
-configure({ adapter: new Adapter() });  
-
-test('it calls start logout on button click', () => {
-    const mockLogout = jest.fn();
-    const wrapper = shallow(<Button startLogout={mockLogout}/>);
-    wrapper.find('submit').at(0).simulate('click');
-    //const mockLogout = jest.fn();
-    //const wrapper = shallow(<Button startLogout={mockLogout}/>);
-    //wrapper.find('button').at(0).simulate('click');
-    //expect(mockLogout).toHaveBeenCalled();
+it('matches the snapshot', () => {
+  const tree = renderer.create(<Search />).toJSON();
+  expect(tree).toMatchSnapshot();
 });
 
 describe('SearchForm', () => {
-    it('should fire onSubmit form callback', () => {
+    it('check button', () => {
       // Mock search form parameters.
       const searchQuery = 'kittens';
       const onSubmit = jest.fn();
   
       // Create test component instance.
       const testComponentInstance = renderer.create((
-        <SearchForm query={searchQuery} onSearchSubmit={onSubmit} />
+        <Search query={searchQuery} onSearchSubmit={onSubmit} />
       )).root;
   
       // Try to find submit button inside the form.
@@ -32,14 +25,24 @@ describe('SearchForm', () => {
       });
       expect(submitButtonInstance).toBeDefined();
   
-      // Since we're not going to test the button component itself
-      // we may just simulate its onClick event manually.
-      const eventMock = { preventDefault: jest.fn() };
-      submitButtonInstance.props.onClick(eventMock);
-  
-      expect(onSubmit).toHaveBeenCalledTimes(1);
-      expect(onSubmit).toHaveBeenCalledWith(searchQuery);
     });
   });
 
+  describe('Seach', () => {
+    it('button click should hide component', () => {
+      const component = shallow(<Search />);
+      const wrapper = component.find('#my-button');
+      expect(wrapper.length).toBe(1);
+    });
+  });
+
+  describe('Searchbar', () => {
+    it('Check search field', () => {
+      const component = shallow(<Search />);
+      const wrapper = component.find('.mr-sm-2');
+      expect(wrapper.length).toBe(1);
+    }); 
+  });
+
+  
  

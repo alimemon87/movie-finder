@@ -5,6 +5,7 @@ import { NavLink } from 'react-router-dom';
 import Search from '../Search/Search';
 
 const header = (props) => {
+    //inline object for css style
     const style = {
         color: 'black',
         fontWeight: 'bold'

@@ -8,6 +8,7 @@ import {Alert} from 'react-bootstrap';
 
 class MoviesList extends React.Component {
 
+    //Setting states in the constructor
     constructor(props) {
         super(props);
         this.handlePageChange =  this.handlePageChange.bind(this);
@@ -24,7 +25,7 @@ class MoviesList extends React.Component {
         }
     }
     
-
+    //First time when Page load getFethchApi will be called for getting popular movies
     componentDidMount() {
         this.getFetchApi();
     }
